@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import {
   Avatar,
   Hidden,
@@ -17,6 +18,7 @@ import { themeShadows } from 'app/components/MatxTheme/themeColors';
 import { NotificationProvider } from 'app/contexts/NotificationContext';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
+import { Breadcrumb } from 'app/components';
 import { topBarHeight } from 'app/utils/constant';
 
 import { Span } from '../../Typography';
@@ -106,11 +108,15 @@ const Layout1Topbar = () => {
     <TopbarRoot>
       <TopbarContainer>
         <Box display="flex">
-          <StyledIconButton onClick={handleSidebarToggle}>
+          {/* <StyledIconButton onClick={handleSidebarToggle}>
             <Icon>menu</Icon>
-          </StyledIconButton>
+          </StyledIconButton> */}
 
-          <IconBox>
+
+          <Box className="breadcrumb">
+            <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+          </Box>
+          {/* <IconBox>
             <StyledIconButton>
               <Icon>mail_outline</Icon>
             </StyledIconButton>
@@ -122,17 +128,17 @@ const Layout1Topbar = () => {
             <StyledIconButton>
               <Icon>star_outline</Icon>
             </StyledIconButton>
-          </IconBox>
+          </IconBox> */}
         </Box>
 
         <Box display="flex" alignItems="center">
           <MatxSearchBox />
 
-          <NotificationProvider>
-            <NotificationBar />
-          </NotificationProvider>
+          <StyledIconButton>
+              <NotificationsNoneOutlinedIcon />
+            </StyledIconButton>
 
-          <ShoppingCart />
+          {/* <ShoppingCart />
 
           <MatxMenu
             menuButton={
@@ -169,7 +175,7 @@ const Layout1Topbar = () => {
               <Icon> power_settings_new </Icon>
               <Span> Logout </Span>
             </StyledItem>
-          </MatxMenu>
+          </MatxMenu> */}
         </Box>
       </TopbarContainer>
     </TopbarRoot>

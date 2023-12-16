@@ -1,6 +1,8 @@
 import { differenceInSeconds } from 'date-fns';
 
 export const convertHexToRGB = (hex) => {
+  console.log("---- kjkjkj")
+  console.log(hex)
   // check if it's a rgba
   if (hex.match('rgba')) {
     let triplet = hex.slice(5).split(',').slice(0, -1).join(',');

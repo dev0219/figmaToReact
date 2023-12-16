@@ -56,7 +56,9 @@ const Layout1Sidenav = () => {
     }
   };
 
-  const primaryRGB = convertHexToRGB(theme.palette.primary.main);
+  const primaryRGB = convertHexToRGB('#1e2866');
+  console.log("-- bacgkground image clor")
+  console.log(primaryRGB)
 
   const updateSidebarMode = (sidebarSettings) => {
     updateSettings({ layout1Settings: { leftSidebar: { ...sidebarSettings } } });

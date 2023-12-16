@@ -17,6 +17,11 @@ const AppEchart = Loadable(lazy(() => import('app/views/charts/echarts/AppEchart
 
 // dashboard page
 const Analytics = Loadable(lazy(() => import('app/views/dashboard/Analytics')));
+const PerasonalOverview = Loadable(lazy(() => import('app/views/personality/overview')));
+const ContentOverview = Loadable(lazy(() => import('app/views/content/overview')));
+const SocialOverView =  Loadable(lazy(() => import('app/views/social/overview')));
+const SocialMedia =  Loadable(lazy(() => import('app/views/social/media')));
+const PersonalEdit = Loadable(lazy(() => import('app/views/personality/edit')));
 
 const routes = [
   {
@@ -32,6 +37,26 @@ const routes = [
         path: '/dashboard/default',
         element: <Analytics />,
         auth: authRoles.admin
+      },
+      {
+        path: '/personality/overview',
+        element: <PerasonalOverview />,
+      },
+      {
+        path: '/personality/edit',
+        element: <PersonalEdit />,
+      },
+      {
+        path: '/social/overview',
+        element: <SocialOverView />,
+      },
+      {
+        path: '/social/media',
+        element: <SocialMedia />,
+      },
+      {
+        path: '/content/overview',
+        element: <ContentOverview />,
       },
 
       // e-chart rooute

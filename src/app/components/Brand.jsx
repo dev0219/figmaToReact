@@ -7,6 +7,7 @@ const BrandRoot = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  background: 'blue',
   padding: '20px 18px 20px 29px',
 }));
 
@@ -24,15 +25,15 @@ const Brand = ({ children }) => {
   return (
     <BrandRoot>
       <Box display="flex" alignItems="center">
-        <MatxLogo />
-        <StyledSpan mode={mode} className="sidenavHoverShow">
-          Matx
+        {/* <MatxLogo /> */}
+        <StyledSpan mode={mode} className="sidenavHoverShow brand-div">
+          Genie Scribe
         </StyledSpan>
       </Box>
 
-      <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
+      {/* <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
         {children || null}
-      </Box>
+      </Box> */}
     </BrandRoot>
   );
 };
