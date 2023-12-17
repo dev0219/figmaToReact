@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
+import { Link} from 'react-router-dom';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 const SearchBox = styled(TextField)(() => ({
@@ -26,6 +27,12 @@ const SearchBox = styled(TextField)(() => ({
     alignItemsCenter:"center"
   },
 }));
+
+const EditElement = styled('div')(({ }) => ({
+  display: "flex",
+  justifyContent: "center"
+}));
+
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -97,10 +104,10 @@ const CustomizePaginationTable = (data) => {
                 
                 <TableCell align="center">
                   {headerRow.filter((item) => item.title == "Edit").length ? 
-                    <IconButton>
+                    <EditElement>
                       <Icon color="error">delete</Icon>
-                      <Icon color="primary">edit</Icon>
-                    </IconButton>
+                      <Link to="/personality/edit/kjkerwer"><Icon color="primary">edit</Icon></Link>
+                    </EditElement>
                     :
                   <Button variant="contained" color="primary">Manage</Button>
                   }

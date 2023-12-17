@@ -22,6 +22,8 @@ const ContentOverview = Loadable(lazy(() => import('app/views/content/overview')
 const SocialOverView =  Loadable(lazy(() => import('app/views/social/overview')));
 const SocialMedia =  Loadable(lazy(() => import('app/views/social/media')));
 const PersonalEdit = Loadable(lazy(() => import('app/views/personality/edit')));
+const PersonalityEditPage = Loadable(lazy(() => import('app/views/personality/editpersonality')));
+const ContentManage = Loadable(lazy(() => import('app/views/content/manage')));
 
 const routes = [
   {
@@ -47,6 +49,10 @@ const routes = [
         element: <PersonalEdit />,
       },
       {
+        path: '/personality/edit/:id',
+        element: <PersonalityEditPage />,
+      },
+      {
         path: '/social/overview',
         element: <SocialOverView />,
       },
@@ -57,6 +63,10 @@ const routes = [
       {
         path: '/content/overview',
         element: <ContentOverview />,
+      },
+      {
+        path: '/content/manage',
+        element: <ContentManage />,
       },
 
       // e-chart rooute

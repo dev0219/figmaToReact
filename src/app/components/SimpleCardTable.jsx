@@ -23,12 +23,20 @@ const CardTitle = styled('div')(({ subtitle }) => ({
   marginBottom: !subtitle && '16px'
 }));
 
-const SimpleCardTable = ({ children, title, subtitle, add }) => {
+
+
+
+const SimpleCardTable = ({ children, title, subtitle, add ,HandleCreate}) => {
+  
+  const CreateNew = () => {
+    HandleCreate()
+  }
+
   return (
     <CardRoot elevation={6}>
       <StyledTableHeader>
       <CardTitle subtitle={subtitle}>{title}</CardTitle>
-      {add && <StyledButton variant="contained" color="primary">
+      {add && <StyledButton variant="contained" color="primary" onClick={() => CreateNew()}>
           Add New<AddOutlinedIcon />
         </StyledButton>}
       </StyledTableHeader>

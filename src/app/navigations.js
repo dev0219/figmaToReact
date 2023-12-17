@@ -24,7 +24,7 @@ export const navigations = [
     icon: 'folder_open',
     children: [
       { name: 'Overview', iconText: 'SI', path: '/content/overview' },
-      { name: 'Manage Content', iconText: 'SU', path: '/session/signup' }
+      { name: 'Manage Content', iconText: 'SU', path: '/content/manage' }
     ]
   },
   {
