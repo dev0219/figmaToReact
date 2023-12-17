@@ -8,7 +8,8 @@ import { navigations } from 'app/navigations';
 const StyledScrollBar = styled(Scrollbar)(() => ({
   paddingLeft: '1rem',
   paddingRight: '1rem',
-  position: 'relative'
+  position: 'relative',
+  paddingTop: '1.5rem'
 }));
 
 const SideNavMobile = styled('div')(({ theme }) => ({

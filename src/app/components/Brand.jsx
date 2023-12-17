@@ -7,7 +7,7 @@ const BrandRoot = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  background: 'blue',
+  background: '#0e1b6a',
   padding: '20px 18px 20px 29px',
 }));
 

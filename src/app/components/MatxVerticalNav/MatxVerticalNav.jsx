@@ -25,7 +25,7 @@ const ExtAndIntCommon = {
   textDecoration: 'none',
   justifyContent: 'space-between',
   transition: 'all 150ms ease-in',
-  '&:hover': { background: 'rgba(255, 255, 255, 0.08)' },
+  '&:hover': { background: '#4256D0' },
   '&.compactNavItem': {
     overflow: 'hidden',
     justifyContent: 'center !important',
@@ -46,9 +46,13 @@ const InternalLink = styled(Box)(({ theme }) => ({
   '& a': {
     ...ExtAndIntCommon,
     color: theme.palette.text.primary,
+    width: '85%',
+    marginLeft: '6%',
+    paddingLeft: '15%'
   },
   '& .navItemActive': {
-    backgroundColor: 'rgba(255, 255, 255, 0.16)',
+    backgroundColor: '#4256D0',
+    borderRadius: '8px'
   },
 }));
 
@@ -65,6 +69,7 @@ const BulletIcon = styled('div')(({ theme }) => ({
   overflow: 'hidden',
   borderRadius: '300px',
   background: theme.palette.text.primary,
+  display: 'none'
 }));
 
 const BadgeValue = styled('div')(() => ({
@@ -135,10 +140,10 @@ const MatxVerticalNav = ({ items }) => {
                   </Icon>
                 ) : (
                   <Fragment>
-                    <BulletIcon
+                    {/* <BulletIcon
                       className={`nav-bullet`}
                       sx={{ display: mode === 'compact' && 'none' }}
-                    />
+                    /> */}
                     <Box
                       className="nav-bullet-text"
                       sx={{

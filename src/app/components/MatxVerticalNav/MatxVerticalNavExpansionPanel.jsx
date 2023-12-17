@@ -6,11 +6,11 @@ import clsx from 'clsx';
 const NavExpandRoot = styled('div')(({ theme }) => ({
   '& .expandIcon': {
     transition: 'transform 0.3s cubic-bezier(0, 0, 0.2, 1) 0ms',
-    transform: 'rotate(90deg)'
+    transform: 'rotate(-90deg)'
   },
   '& .collapseIcon': {
     transition: 'transform 0.3s cubic-bezier(0, 0, 0.2, 1) 0ms',
-    transform: 'rotate(0deg)'
+    transform: 'rotate(90deg)'
   },
   '& .expansion-panel': {
     overflow: 'hidden',
