@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import {
@@ -83,6 +83,8 @@ const IconBox = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: { display: 'none !important' }
 }));
 
+
+
 const Layout1Topbar = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
@@ -103,6 +105,18 @@ const Layout1Topbar = () => {
     }
     updateSidebarMode({ mode });
   };
+
+  const UpdateBreadCrumb = (items) => {
+    console.log("---event items")
+    console.log(items)
+  }
+  
+  useEffect(() => {
+    document.addEventListener("BreadcrumbEvent", UpdateBreadCrumb);
+      return () => {
+        document.removeEventListener("BreadcrumbEvent", UpdateBreadCrumb);
+      }
+  }, []);
 
   return (
     <TopbarRoot>
@@ -132,7 +146,7 @@ const Layout1Topbar = () => {
         </Box>
 
         <Box display="flex" alignItems="center">
-          <MatxSearchBox />
+          {/* <MatxSearchBox /> */}
 
           <StyledIconButton>
               <NotificationsNoneOutlinedIcon />

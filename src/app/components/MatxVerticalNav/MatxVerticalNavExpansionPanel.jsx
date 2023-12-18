@@ -81,10 +81,16 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
   const { name, icon, iconText, badge } = item;
 
   const handleClick = () => {
+    
     componentHeight.current = 0;
     calcaulateHeight(elementRef.current);
     setCollapsed(!collapsed);
   };
+
+  const childrenMenuClick = () => {
+    const BreabEvt = new CustomEvent("BreadcrumbEvent", {detail: {pathname:pathname,item:item}});
+    document.dispatchEvent(BreabEvt);
+  }
 
   const calcaulateHeight = useCallback((node) => {
     if (node.name !== 'child') {
@@ -100,6 +106,8 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
 
   useEffect(() => {
     if (!elementRef) return;
+
+    childrenMenuClick()
 
     calcaulateHeight(elementRef.current);
 

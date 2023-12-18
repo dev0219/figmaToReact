@@ -84,9 +84,9 @@ const CustomizePaginationTable = (data) => {
     
         <TableHead>
           <TableRow>
-            {headerRow.map((item_header) => {
+            {headerRow.map((item_header, index) => {
               return (
-                  <TableCell align={item_header.align}>{item_header.title}</TableCell>
+                  <TableCell key={index} align={item_header.align}>{item_header.title}</TableCell>
               )
             })}
           </TableRow>
