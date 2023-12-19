@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ButtonBase, Icon, Box, styled } from '@mui/material';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -123,8 +122,6 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
     }
   }, [pathname, calcaulateHeight]);
 
-  
-
   return (
     <NavExpandRoot>
       <BaseButton
@@ -137,7 +134,6 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
       >
         <Box display="flex" alignItems="center">
           {icon && <Icon className="icon">{icon}</Icon>}
-          {/* <SettingsOutlinedIcon /> */}
           {iconText && <BulletIcon />}
           <ItemText className="sidenavHoverShow">{name}</ItemText>
         </Box>

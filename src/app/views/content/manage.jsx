@@ -54,6 +54,7 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 const ImageRender =  styled('div')({
+  margin: 'auto',
   background: "white",
   maxWidth: '208px',
   maxHeight: '120px',
@@ -129,6 +130,7 @@ const SheduleActionEle =  styled('div')({
 
 
 const Shedulebody =  styled('div')({
+  margin: 'auto',
   display: 'block',
   padding: '5px',
   maxWidth: '208px',
@@ -280,11 +282,6 @@ const ContentManagePanel = styled(Card)({
     }
 
     const SubmitSchedule = () => {
-      let currentDate = new Date(scheduleDate).toLocaleDateString('en-US', {
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric',
-      })
 
       let newobj = {
         id: shortId.generate(),
@@ -294,8 +291,11 @@ const ContentManagePanel = styled(Card)({
       }
 
       let currentScheduleArr = scheduleArr;
-
+      let currentSelectedSchedule = selectedPersonality;
+      
       currentScheduleArr.push(newobj)
+      currentSelectedSchedule['schedules'].push(newobj)
+      setSelectedPersonality({...currentSelectedSchedule})
       setScheduleArr([...currentScheduleArr])
       setOpen(false);
 

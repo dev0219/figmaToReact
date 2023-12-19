@@ -2,7 +2,6 @@ import { memo } from 'react';
 import { Hidden, Switch, Box, styled, useTheme } from '@mui/material';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
 import useSettings from 'app/hooks/useSettings';
-import { convertHexToRGB } from 'app/utils/utils';
 import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant';
 import Brand from '../../Brand';
 import Sidenav from '../../Sidenav';
@@ -21,7 +20,7 @@ const SidebarNavRoot = styled(Box)(({ theme, width, bg, image }) => ({
   overflow: 'hidden',
   color: theme.palette.text.primary,
   transition: 'all 250ms ease-in-out',
-  backgroundImage: `linear-gradient(to bottom, rgba(${bg}, 0.96), rgba(${bg}, 0.96)), url(${image})`,
+  background: `linear-gradient(to bottom, rgb(19 28 81 / 100%), rgb(19 28 81 / 86%)) , url(${image})`,
   '&:hover': {
     width: sideNavWidth,
     '& .sidenavHoverShow': { display: 'block' },
@@ -56,10 +55,6 @@ const Layout1Sidenav = () => {
     }
   };
 
-  const primaryRGB = convertHexToRGB('#1e2866');
-  console.log("-- bacgkground image clor")
-  console.log(primaryRGB)
-
   const updateSidebarMode = (sidebarSettings) => {
     updateSettings({ layout1Settings: { leftSidebar: { ...sidebarSettings } } });
   };
@@ -69,7 +64,7 @@ const Layout1Sidenav = () => {
   };
 
   return (
-    <SidebarNavRoot image={bgImgURL} bg={primaryRGB} width={getSidenavWidth()}>
+    <SidebarNavRoot image={bgImgURL} width={getSidenavWidth()}>
       <NavListBox>
         <Brand>
           <Hidden smDown>

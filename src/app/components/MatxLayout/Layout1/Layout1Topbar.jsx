@@ -1,32 +1,21 @@
 import { memo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { useLocation } from 'react-router-dom';
 import {
-  Avatar,
-  Hidden,
   Icon,
   IconButton,
-  MenuItem,
   useMediaQuery,
   Box,
   styled,
   useTheme
 } from '@mui/material';
 
-import { MatxMenu, MatxSearchBox } from 'app/components';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
-import { NotificationProvider } from 'app/contexts/NotificationContext';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import { navigations } from 'app/navigations';
-import { Breadcrumb } from 'app/components';
 import { topBarHeight } from 'app/utils/constant';
-
-import { Span } from '../../Typography';
-import NotificationBar from '../../NotificationBar/NotificationBar';
-import ShoppingCart from '../../ShoppingCart';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary
@@ -74,39 +63,9 @@ const TopbarContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-const UserMenu = styled(Box)({
-  padding: 4,
-  display: 'flex',
-  borderRadius: 24,
-  cursor: 'pointer',
-  alignItems: 'center',
-  '& span': { margin: '0 8px' }
-});
-
-const StyledItem = styled(MenuItem)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  minWidth: 185,
-  '& a': {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none'
-  },
-  '& span': { marginRight: '10px', color: theme.palette.text.primary }
-}));
-
-const IconBox = styled('div')(({ theme }) => ({
-  display: 'inherit',
-  [theme.breakpoints.down('md')]: { display: 'none !important' }
-}));
-
-
-
 const Layout1Topbar = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
-  const { logout, user } = useAuth();
   const { pathname } = useLocation();
   const [headName, setHeadName] = useState('')
   const [childName, setChildName] = useState('')
@@ -155,71 +114,14 @@ const Layout1Topbar = () => {
           <StyledIconButton onClick={handleSidebarToggle}>
             <Icon>menu</Icon>
           </StyledIconButton>
-
-
           <Box className="breadcrumb">
              <h2>{headName}</h2><ChevronRightIcon/><h3>{childName}</h3>
           </Box>
-          {/* <IconBox>
-            <StyledIconButton>
-              <Icon>mail_outline</Icon>
-            </StyledIconButton>
-
-            <StyledIconButton>
-              <Icon>web_asset</Icon>
-            </StyledIconButton>
-
-            <StyledIconButton>
-              <Icon>star_outline</Icon>
-            </StyledIconButton>
-          </IconBox> */}
         </Box>
-
         <Box display="flex" alignItems="center">
-          {/* <MatxSearchBox /> */}
-
           <StyledIconButton>
               <NotificationsNoneOutlinedIcon />
             </StyledIconButton>
-
-          {/* <ShoppingCart />
-
-          <MatxMenu
-            menuButton={
-              <UserMenu>
-                <Hidden xsDown>
-                  <Span>
-                    Hi <strong>{user.name}</strong>
-                  </Span>
-                </Hidden>
-                <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />
-              </UserMenu>
-            }
-          >
-            <StyledItem>
-              <Link to="/">
-                <Icon> home </Icon>
-                <Span> Home </Span>
-              </Link>
-            </StyledItem>
-
-            <StyledItem>
-              <Link to="/page-layouts/user-profile">
-                <Icon> person </Icon>
-                <Span> Profile </Span>
-              </Link>
-            </StyledItem>
-
-            <StyledItem>
-              <Icon> settings </Icon>
-              <Span> Settings </Span>
-            </StyledItem>
-
-            <StyledItem onClick={logout}>
-              <Icon> power_settings_new </Icon>
-              <Span> Logout </Span>
-            </StyledItem>
-          </MatxMenu> */}
         </Box>
       </TopbarContainer>
     </TopbarRoot>

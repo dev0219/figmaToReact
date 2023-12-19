@@ -35,8 +35,11 @@ const EditElement = styled('div')(({ }) => ({
 }));
 
 const StyledTable = styled(Table)(() => ({
-  whiteSpace: "pre",
+  overflow:'auto',
+  tableLayout: 'fixed',
+  whiteSpace: "nowrap",
   minHeight:"300px",
+  minWidth: '600px',
   "& thead": {
     "& tr": { "& th": { paddingLeft: 0, paddingRight: 0, color:" #A1A1AA", fontWeight:"500", fontSize:"16px" } },
   },
