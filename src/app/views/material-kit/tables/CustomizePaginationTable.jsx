@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
+import Chip from '@mui/material/Chip';
 import { Link} from 'react-router-dom';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
@@ -33,7 +34,6 @@ const EditElement = styled('div')(({ }) => ({
   justifyContent: "center"
 }));
 
-
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
   minHeight:"300px",
@@ -45,12 +45,7 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-
-
-
 const CustomizePaginationTable = (data) => {
-  console.log("-headerRow--data")
-  console.log(data)
   const headerRow = data.header;
   const [tableArr, setTableData] = useState(data.data);
   const [page, setPage] = useState(0);
@@ -86,30 +81,38 @@ const CustomizePaginationTable = (data) => {
           <TableRow>
             {headerRow.map((item_header, index) => {
               return (
-                  <TableCell key={index} align={item_header.align}>{item_header.title}</TableCell>
+                  <TableCell key={index} align={item_header.align} sx={{fontFamily: 'Inter',}}>{item_header.title}</TableCell>
               )
             })}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{fontFamily: 'Inter'}}>
           {tableArr
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((subscriber, index) => (
+            .map((item, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.company}</TableCell>
-                <TableCell align="center">{subscriber.date}</TableCell>
-                <TableCell align="center">{subscriber.status}</TableCell>
-                <TableCell align="center">${subscriber.amount}</TableCell>
+                <TableCell align="left">{item.name}</TableCell>
+                <TableCell align="center">{item.website}</TableCell>
+                <TableCell align="center">{item.sources}</TableCell>
+                <TableCell align="center">
+                  {new Date(item.createdAt).toLocaleDateString('en-US', {
+                    month: 'numeric',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </TableCell>
+                <TableCell align="center">
+                  {item.status === 1?<Chip sx={{background:'#FFEDD5'}} label="Learning"/>:(item.status ===2?<Chip sx={{background:'#DEF7EC'}}  label="Ready"/>:<Chip sx={{background:'#DEF7EC'}} label="In Use" />)}
+                </TableCell>
                 
                 <TableCell align="center">
-                  {headerRow.filter((item) => item.title == "Edit").length ? 
+                  {headerRow.filter((header_item) => header_item.title == "Edit").length ? 
                     <EditElement>
                       <Icon color="error">delete</Icon>
-                      <Link to="/personality/edit/kjkerwer"><Icon color="primary">edit</Icon></Link>
+                      <Link to={"/personality/edit/"+item.id}><Icon color="primary">edit</Icon></Link>
                     </EditElement>
                     :
-                  <Button variant="contained" color="primary">Manage</Button>
+                    <Link to={"/content/manage/"+item.id}><Button variant="contained" color="primary" sx={{borderRadius: '10px'}}>Manage</Button></Link>
                   }
                   
                 </TableCell>

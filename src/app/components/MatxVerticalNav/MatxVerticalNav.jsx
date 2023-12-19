@@ -1,11 +1,13 @@
 import { Box, ButtonBase, Icon, styled } from '@mui/material';
 import useSettings from 'app/hooks/useSettings';
+
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Paragraph, Span } from '../Typography';
 import MatxVerticalNavExpansionPanel from './MatxVerticalNavExpansionPanel';
 
 const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
+  fontFamily: 'Inter',
   fontSize: '12px',
   marginTop: '20px',
   marginLeft: '15px',
@@ -16,6 +18,7 @@ const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
 }));
 
 const ExtAndIntCommon = {
+  fontFamily: 'Inter',
   display: 'flex',
   overflow: 'hidden',
   borderRadius: '4px',
@@ -137,7 +140,7 @@ const MatxVerticalNav = ({ items }) => {
                 {item?.icon ? (
                   <Icon className="icon" sx={{ width: 36 }}>
                     {item.icon}
-                  </Icon>
+                  </Icon>                 
                 ) : (
                   <Fragment>
                     {/* <BulletIcon

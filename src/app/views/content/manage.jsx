@@ -1,24 +1,22 @@
 import { Box, styled, Button,InputLabel, Card } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
-import InputAdornment from '@mui/material/InputAdornment';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import SaveIcon from '@mui/icons-material/Save';
 import CircleIcon from '@mui/icons-material/Circle';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import TextField from '@mui/material/TextField';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import Dialog from '@mui/material/Dialog';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Grid from '@mui/material/Grid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import shortId from 'shortid';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Fab from '@mui/material/Fab'
+import Fab from '@mui/material/Fab';
+import { useParams, Link } from "react-router-dom";
+import StaticData from "../../../static/static.json";
 
 
 
@@ -40,6 +38,13 @@ const Container = styled("div")(({ theme }) => ({
         fontSize:"32px",
         [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
     },
+    "& .breadcrumb-subtitle": {
+      marginBottom: "30px",
+      fontWeight:'400',
+      lineHeight:"16.94px",
+      fontSize:"14px",
+      maxWidth: '600px'
+  },
     "& .breadcrumb-header": {
       fontWeight:'500',
       lineHeight:"24.2px",
@@ -211,47 +216,19 @@ const ContentManagePanel = styled(Card)({
   position: 'relative'
 })
 
-const ArrayData = [
-  {name: "test1"},
-  {name: "test2"},
-  {name: "test3"},
-  {name: "test4"},
-  {name: "test5"},
-  {name: "test6"},
-  {name: "test7"},
-  {name: "test8"},
-  {name: "test9"},
-  {name: "test10"}
-]
-
-const mediasArr = [
-  "Instagram Reels", "TikTok", "YouTube Shorts", "Instagram Stories"
-]
-
-
   const ManageContent = () => {
+    const {id} = useParams();
     const [open, setOpen] = useState(false);
-    const [files, setFiles] = useState([]);
-    const [links, setLinks] = useState([]);
-    const [medias, setMedias] = useState(mediasArr);
+    const [scheduleArr, setScheduleArr] = useState([]);
+    const [selectedPersonality, setSelectedPersonality] = useState({});
+    const [name , setName] = useState("");
+    const [medias, setMedias] = useState(StaticData.medias);
     const [scheduleDate, setScheduleDate] = useState(new Date());
-
-    const [isNewLink, setisNewLink] = useState(false)
-    const [isNewSource, setisNewSource] = useState(false)
     const [type, setTypeContent] = useState("");
-
-    const [isNewLinkVal, setisNewLinkVal] = useState('')
-    const [isNewSourceVal, setisNewSourceVal] = useState('')
 
     const CreateScheduleEvent = () => {
       setOpen(true)
-    }
-
-    const handleCapture = ({ target }) => {
-      let uploadedFiles = files;
-      uploadedFiles.push(target.files[0].name)
-      setFiles([...uploadedFiles])
-    };
+    } 
 
     const HandleRemove = (index) => {
       let LstData = [];
@@ -266,19 +243,86 @@ const mediasArr = [
     const handleChange = (val) => {
       console.log(" -- selection value -----")
       console.log(val)
-      console.log(scheduleDate)
     }
+
+    const handleScheduleDate = (e) => {
+      setScheduleDate(e)
+      let currentDate = new Date(e).toLocaleDateString('en-US')
+      let currentScheduleArr = selectedPersonality.schedules.filter(schedule => new Date(schedule.createdAt).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+      }) == currentDate);
+
+      setScheduleArr([...currentScheduleArr])
+    }
+
+    const getDetailData = (idVal) => {
+      let selected_personality = StaticData.personalities?.filter(item => item.id == idVal)[0]
+      let currentDate = new Date(scheduleDate).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+      })
+
+      let currentScheduleArr = [];
+      setSelectedPersonality({...selected_personality})
+      if (selected_personality?.schedules) {
+        currentScheduleArr = selected_personality.schedules.filter(schedule => new Date(schedule.createdAt).toLocaleDateString('en-US', {
+          month: 'numeric',
+          day: 'numeric',
+          year: 'numeric',
+        }) == currentDate);
+        setScheduleArr([...currentScheduleArr])
+      }
+      setName(selected_personality['name'])
+      
+    }
+
+    const SubmitSchedule = () => {
+      let currentDate = new Date(scheduleDate).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+      })
+
+      let newobj = {
+        id: shortId.generate(),
+        title: "New schedule event",
+        description:"42s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+        createdAt:new Date(scheduleDate)
+      }
+
+      let currentScheduleArr = scheduleArr;
+
+      currentScheduleArr.push(newobj)
+      setScheduleArr([...currentScheduleArr])
+      setOpen(false);
+
+    }
+
+    useEffect(() => {
+      if (id) {
+        getDetailData(id);
+      } else {
+        getDetailData(StaticData.personalities[0]['id'])
+      }
+      
+    }, [])
 
     return (
       <Container>
         <Box className="breadcrumb">
-            Manage: Doritos
+            Manage: {name}
+        </Box>
+        <Box className="breadcrumb-subtitle">
+            Here, you will manage the content that is being automatically generated through your “personalities”. It allows both for scheduling and content verification.
         </Box>
         <ContentManagePanel>
           <Grid container spacing={2}>
                 <Grid item lg={6} md={6} sm={12} xs={12}>      
                   <SheduleCandarEle>
-                    <Calendar value={scheduleDate} onChange={(e) => setScheduleDate(e)}/>
+                    <Calendar value={scheduleDate} onChange={(e) => (handleScheduleDate(e))}/>
                     <SheduleCalendarFooter>
                        <CircleIcon sx={{color: 'blue', fontSize:'15px'}}/>Content planned on that day
                     </SheduleCalendarFooter>
@@ -287,7 +331,7 @@ const mediasArr = [
                 </Grid>
                 <Grid item sx={{display: 'flex', justifyContent: 'center'}} lg={6} md={6} sm={12} xs={12}>
                   <ScheduleRenderContainer>
-                    {ArrayData.map((item, index) => {
+                    {scheduleArr.map((item, index) => {
                       return (
                         <ScheduleRender key={index}>
                           <SheduleHeaderEle>
@@ -311,7 +355,13 @@ const mediasArr = [
                             </Grid>
                             <Grid item lg={7} md={12} sm={12} xs={12}>
                               <Shedulebody>
-                                <p>4/2/2020</p>
+                                <p>
+                                  {new Date(item.createdAt).toLocaleDateString('en-US', {
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                  })}
+                                </p>
                                 <h2>Best beaches in California</h2>
                                 <h3>43s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.</h3>
                                 <SheduleActionEle>
@@ -324,7 +374,7 @@ const mediasArr = [
                         </ScheduleRender> 
                       )
                     })}
-                    {ArrayData.length ? 
+                    {scheduleArr.length ? 
                         <SheduleAddEle>                   
                             <Button variant="contained" color="primary" sx={{ borderRadius: '10px',width:'146px', height: '33px', fontSize:'14px', padding: '5px', marginTop: '5px'}} onClick={() => CreateScheduleEvent()} >+ Shedule content </Button>
                         </SheduleAddEle>
@@ -357,15 +407,16 @@ const mediasArr = [
 
           <DialogContent>
             <Grid container spacing={2}>
-              <Grid item xs={6}>             
+              <Grid item lg={6} md={6} sm={12} xs={12}>             
                   <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Type of content</InputLabel>
                   
                   <TextField select label="" margin="dense"
+                    fullWidth
                     value={type}
                     InputProps={{
                       style: {
                         borderRadius: "12px",
-                        width: '507px',
+                        // width: '507px',
                         height: '49px'
                       }
                     }}
@@ -388,7 +439,7 @@ const mediasArr = [
                     })} 
                  
               </Grid>
-              <Grid item xs={6}>
+              <Grid item lg={6} md={6} sm={12} xs={12}>
                   <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Keyword to use</InputLabel>
                   <TextField
                     fullWidth
@@ -399,18 +450,18 @@ const mediasArr = [
                     InputProps={{
                       style: {
                         borderRadius: "12px",
-                        width: '507px',
+                        // width: '507px',
                         height: '49px'
                       }
                     }}
                   />
                   <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Use latest news to generate content</InputLabel>
                   
-                  <TextField select label="" margin="dense"
+                  <TextField select label="" margin="dense" fullWidth
                   InputProps={{
                     style: {
                       borderRadius: "12px",
-                      width: '507px',
+                      // width: '507px',
                       height: '49px'
                     }
                   }}
@@ -423,11 +474,11 @@ const mediasArr = [
 
                   <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Use as backgrouond of videos:</InputLabel>
                   
-                  <TextField select label="" margin="dense"
+                  <TextField select label="" margin="dense" fullWidth
                   InputProps={{
                     style: {
                       borderRadius: "12px",
-                      width: '507px',
+                      // width: '507px',
                       height: '49px'
                     }
                   }}
@@ -448,7 +499,7 @@ const mediasArr = [
                     InputProps={{
                       style: {
                         borderRadius: "12px",
-                        width: '507px',
+                        // width: '507px',
                         height: '49px'
                       }
                     }}
@@ -459,7 +510,7 @@ const mediasArr = [
           </DialogContent>
 
           <DialogActions sx={{display: 'flex', justifyContent: 'flex-start',paddingLeft: '20px'}}>
-            <Button onClick={handleClose} color="primary" variant="contained" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px'}}>
+            <Button onClick={() => SubmitSchedule()} color="primary" variant="contained" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px'}}>
               Enregistrer
             </Button>
             <Button variant="outlined" onClick={handleClose} sx={{ width: '200px', fontSize: '18px', borderRadius: '10px', color: 'black'}}>
@@ -468,9 +519,7 @@ const mediasArr = [
 
           
           </DialogActions>
-        </Dialog>
-          
-        
+        </Dialog>       
       </Container>
   );
 };

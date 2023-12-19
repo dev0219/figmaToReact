@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { Box, styled,Card, Button } from "@mui/material";
-import { Breadcrumb, SimpleCard, SimpleCardTable } from "app/components";
 import Grid from '@mui/material/Grid';
-import CustomizePaginationTable from "../material-kit/tables/CustomizePaginationTable";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const Container = styled("div")(({ theme }) => ({
+    fontFamily: 'Inter',
     margin: "5% 5%",
     [theme.breakpoints.down("sm")]: { margin: "16px" },
     "& .breadcrumb": {
@@ -18,6 +18,7 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 const CardRoot = styled(Card)({
+  fontFamily: 'Inter',
   height: '245px',
   width: '197px',
   marginTop: "20px",
@@ -26,6 +27,7 @@ const CardRoot = styled(Card)({
 });
 
 const Element1 = styled('div')({
+  fontFamily: 'Inter',
   display: 'flex',
   justifyContent: 'center',
   alignItems:'center',
@@ -42,6 +44,7 @@ const Element1 = styled('div')({
 });
 
 const Element2 = styled('div')({
+  fontFamily: 'Inter',
   display: 'flex',
   justifyContent: 'center',
   alignItems:'center',
@@ -58,6 +61,7 @@ const Element2 = styled('div')({
 
 
 const AddCardRoot = styled(Card)({
+  fontFamily: 'Inter',
   height: '245px',
   width: '197px',
   marginTop: "20px",
@@ -81,114 +85,56 @@ const AddCardRoot = styled(Card)({
   }
 });
 
-const personalityArr = [
-    {
-      name: "john doe",
-      date: "18 january, 2019",
-      amount: 1000,
-      status: "close",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "kessy bryan",
-      date: "10 january, 2019",
-      amount: 9000,
-      status: "open",
-      company: "My Fintech LTD.",
-    },
-    {
-      name: "kessy bryan",
-      date: "10 january, 2019",
-      amount: 9000,
-      status: "open",
-      company: "My Fintech LTD.",
-    },
-    {
-      name: "james cassegne",
-      date: "8 january, 2019",
-      amount: 5000,
-      status: "close",
-      company: "Collboy Tech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-  ];
-
-
   const SocialMedia = () => {
+
+     const [soicalMedias, setSocialMedias] = useState([]);
+     const Add = () => {
+      let newobj = {name: "new_media"};
+      let currentmedias = soicalMedias;
+      currentmedias.push(newobj)
+      setSocialMedias([...currentmedias])
+     }
+
     return (
       <Container>
         <Box className="breadcrumb">
             Performance Overview
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-        <Grid lg={12/5} md={12/3} sm={12/3} xs={12/2}>
-          <AddCardRoot>
-            <Box>
-              <AddOutlinedIcon />
-              <p>Link a new media platform</p>
-            </Box>
-              
-          </AddCardRoot>
-        </Grid>
-          {personalityArr.map((item) => {
-            return (
-              <Grid lg={12/5} md={12/3} sm={12/3} xs={12/2}>
-                <CardRoot>
-                  <Element1>
-                    <img src="/assets/images/customize/insta.png" alt="upgrade" />
-                    <p>Instagram</p>
-                  </Element1>
-                  <Element2>
-                    <Box>
-                       <img src="/assets/images/customize/graph.png" alt="upgrade" />
-                      <p>+5.2%</p>
-                    </Box>                      
-                  </Element2>
-                  <Element1>
-                     <Button size="small" variant="contained" sx={{ borderRadius: 2.5 }}>More info</Button>
-                     <DeleteOutlineOutlinedIcon style={{ color: "#CC1341" }}/>
-                  </Element1>
-                    
-                </CardRoot>
-              </Grid>
-            )
-          })}
-        </Grid>
+          <Grid container spacing={1}>
+            <Grid item lg={12/5} md={12/3} sm={12/3} xs={12/2}>
+              <AddCardRoot>
+                <Box onClick={() => Add()}>
+                  <AddOutlinedIcon />
+                  <p>Link a new media platform</p>
+                </Box>
+                  
+              </AddCardRoot>
+            </Grid>
+            {soicalMedias.map((item, index) => {
+              return (
+                <Grid item key={index} lg={12/5} md={12/3} sm={12/3} xs={12/2}>
+                  <CardRoot>
+                    <Element1>
+                      <img src="/assets/images/customize/insta.png" alt="upgrade" />
+                      <p>Instagram</p>
+                    </Element1>
+                    <Element2>
+                      <Box>
+                        <img src="/assets/images/customize/graph.png" alt="upgrade" />
+                        <p>+5.2%</p>
+                      </Box>                      
+                    </Element2>
+                    <Element1>
+                      <Button size="small" variant="contained" sx={{ borderRadius: 2.5 }}>More info</Button>
+                      <DeleteOutlineOutlinedIcon style={{ color: "#CC1341" }}/>
+                    </Element1>
+                      
+                  </CardRoot>
+                </Grid>
+              )
+            })}
+          </Grid>
         </Box>
       </Container>
   );

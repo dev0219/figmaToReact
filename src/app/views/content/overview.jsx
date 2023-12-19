@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Box, styled } from "@mui/material";
-import { Breadcrumb, SimpleCard, SimpleCardTable } from "app/components";
+import {SimpleCardTable } from "app/components";
 import CustomizePaginationTable from "../material-kit/tables/CustomizePaginationTable";
+import StaticData from "../../../static/static.json";
 
 const Container = styled("div")(({ theme }) => ({
     margin: "5% 5%",
@@ -14,72 +16,6 @@ const Container = styled("div")(({ theme }) => ({
     },
 }));
 
-const personalityArr = [
-    {
-      name: "john doe",
-      date: "18 january, 2019",
-      amount: 1000,
-      status: "close",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "kessy bryan",
-      date: "10 january, 2019",
-      amount: 9000,
-      status: "open",
-      company: "My Fintech LTD.",
-    },
-    {
-      name: "kessy bryan",
-      date: "10 january, 2019",
-      amount: 9000,
-      status: "open",
-      company: "My Fintech LTD.",
-    },
-    {
-      name: "james cassegne",
-      date: "8 january, 2019",
-      amount: 5000,
-      status: "close",
-      company: "Collboy Tech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-  ];
-
   const headerRows = [
     {title:"Name", align:"left"},
     {title:"Website", align:"center"},
@@ -90,13 +26,15 @@ const personalityArr = [
   ]
 
   const ContentOverview = () => {
+    const [personalityData, setPersonalityData] = useState(StaticData.personalities);
+
     return (
       <Container>
         <Box className="breadcrumb">
             Select a personality
         </Box>
-        <SimpleCardTable title="List of your personalities" add="true">
-            <CustomizePaginationTable data={personalityArr} header={headerRows}/>
+        <SimpleCardTable title="List of your personalities" add="">
+            <CustomizePaginationTable data={personalityData} header={headerRows}/>
         </SimpleCardTable>
       </Container>
   );

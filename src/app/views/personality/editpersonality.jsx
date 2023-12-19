@@ -4,10 +4,13 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Fab from '@mui/material/Fab'
+import StaticData from "../../../static/static.json";
+import { useParams, Link } from "react-router-dom";
 
 const Container = styled("div")(({ theme }) => ({
+  fontFamily: 'Inter',
     margin: "5% 5%",
     [theme.breakpoints.down("sm")]: { margin: "16px" },
     "& .breadcrumb": {
@@ -27,34 +30,39 @@ const Container = styled("div")(({ theme }) => ({
 
 
 const ElementListPanel = styled("div")({
+  fontFamily: 'Inter',
   display: 'block'
 })
 
 const EditPersonalPanel = styled(Card)({
+  fontFamily: 'Inter',
   display: 'block',
   height: '100%',
   padding: '20px 24px'
 })
 
-const ActionsElement = styled("div")({
-  marginTop: '20px'
-})
+const ActionsElement = styled("div")(({ theme }) => ({
+  fontFamily: 'Inter',
+  marginTop: '20px',
+  "& button":{
+    [theme.breakpoints.down("sm")]: { width: "120px" },
+  }
+}));
 
 
   const PerasonaleditPage = () => {
-    const [open, setOpen] = useState(false);
+    const {id} = useParams();
     const [files, setFiles] = useState([]);
     const [links, setLinks] = useState([]);
+    const [name, setName] = useState('');
+    const [website, setWebsite] = useState('');
+    const [tone, setTone] = useState('');
     const [sources, setSources] = useState([]);
     const [isNewLink, setisNewLink] = useState(false)
     const [isNewSource, setisNewSource] = useState(false)
-
     const [isNewLinkVal, setisNewLinkVal] = useState('')
     const [isNewSourceVal, setisNewSourceVal] = useState('')
 
-    const CreatePersonality = () => {
-      setOpen(true)
-    }
 
     const handleCapture = ({ target }) => {
       let uploadedFiles = files;
@@ -109,7 +117,20 @@ const ActionsElement = styled("div")({
       }
     }
 
-    const handleClose = () => setOpen(false);
+    const getDetailData = (id) => {
+      let selected_personality = StaticData.personalities?.filter(item => item.id == id)[0]
+      setFiles([...selected_personality['file']])
+      setLinks([...selected_personality['link']])
+      setSources([...selected_personality['verification']])
+      setName(selected_personality['name'])
+      setWebsite(selected_personality['website'])
+      setTone(selected_personality['learnt'])
+    }
+
+    useEffect(() => {
+      getDetailData(id);
+    }, [])
+
     return (
       <Container>
         <Box className="breadcrumb">
@@ -119,33 +140,35 @@ const ActionsElement = styled("div")({
           <Box className="breadcrumb-header">
               Edit : Doties
           </Box>
-          <Grid container spacing={2}>
-                <Grid item xs={6}>             
+          <Grid container spacing={5}>
+                <Grid item lg={6} md={6} sm={12} xs={12}>             
                     <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Name*</InputLabel>
                     <TextField
                       fullWidth
                       id="name"
                       type="text"
+                      value={name}
                       autoFocus
                       margin="dense"
                       InputProps={{
                         style: {
                           borderRadius: "12px",
-                          width: '507px',
+                          // width: '507px',
                           height: '49px'
                         }
                       }}
                     />   
                     <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Tone & Style of writing learnt</InputLabel>
                     <TextField
+                    fullWidth
                       placeholder="The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length ofThe Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within. the content within."
                       multiline
                       rows={6}
+                      value={tone}
                       maxRows={10}
                       InputProps={{
                         style: {
-                          borderRadius: "12px",
-                          width: '507px'
+                          borderRadius: "12px"
                         }
                       }}
                     />          
@@ -154,11 +177,12 @@ const ActionsElement = styled("div")({
                       fullWidth
                       id="website"
                       type="text"
+                      value={website}
                       margin="dense"
                       InputProps={{
                         style: {
                           borderRadius: "12px",
-                          width: '507px',
+                          // width: '507px',
                           height: '49px'
                         }
                       }}
@@ -174,18 +198,9 @@ const ActionsElement = styled("div")({
                             </Fab>
                         )
                       })}                  
-                    </ElementListPanel>
-                      <ActionsElement>
-                        <Button onClick={handleClose} color="primary" variant="contained" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px'}}>
-                          Save
-                        </Button>
-                        <Button variant="outlined" onClick={handleClose} sx={{ width: '200px', fontSize: '18px', borderRadius: '10px', color: 'black', marginLeft: '20px'}}>
-                          Cancel
-                        </Button>
-                      </ActionsElement>
-                    
+                    </ElementListPanel>                      
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item lg={6} md={6} sm={12} xs={12}>
                     <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Links To Learn From</InputLabel>
                     <ElementListPanel>
                       <Button variant="contained" color="primary" sx={{ borderRadius: '10px', width:'95px', height: '33px', fontSize:'14px', padding: '0px', marginTop: '5px'}} onClick={() => HandleNewaction('link')}>Add New+</Button>
@@ -260,6 +275,19 @@ const ActionsElement = styled("div")({
                         )
                       })}                  
                     </ElementListPanel>
+                </Grid>
+
+                <Grid item lg={6} md={6} sm={12} xs={12}>
+                  <ActionsElement>
+                        <Link to="/personality/edit"><Button color="primary" variant="contained" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px'}}>
+                          Save
+                        </Button></Link>
+                        <Link to="/personality/edit"><Button variant="outlined" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px', color: 'black', marginLeft: '20px'}}>
+                          Cancel
+                        </Button>
+                        </Link>
+                      </ActionsElement>
+                    
                 </Grid>
           </Grid> 
         </EditPersonalPanel>

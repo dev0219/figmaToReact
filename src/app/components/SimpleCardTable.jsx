@@ -2,20 +2,25 @@ import { Card, Box, styled, Button } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 const CardRoot = styled(Card)({
+  fontFamily: 'Inter',
   height: '100%',
   padding: '20px 24px'
 });
 
 const StyledButton = styled(Button)(({ theme }) => ({
+  fontFamily: 'Inter',
   margin: theme.spacing(1),
+  borderRadius: '10px'
 }));
 
 const StyledTableHeader = styled('div')(({ subtitle }) => ({
+  fontFamily: 'Inter',
    display: "flex",
    justifyContent: "space-between"
 }));
 
 const CardTitle = styled('div')(({ subtitle }) => ({
+  fontFamily: 'Inter',
   fontSize: '1rem',
   fontWeight: '500',
  

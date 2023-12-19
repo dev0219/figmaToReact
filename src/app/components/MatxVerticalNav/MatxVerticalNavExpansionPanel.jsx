@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ButtonBase, Icon, Box, styled } from '@mui/material';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -88,9 +89,8 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
   };
 
   const childrenMenuClick = () => {
-    let selectedMenu = item.children.filter((menuItem) => menuItem.path == pathname)    
-    if (selectedMenu.length) {
-      console.log("-----dflgneg", item)
+    let selectedMenu = item.children?.filter((menuItem) => menuItem.path == pathname)    
+    if (selectedMenu?.length) {
       const BreabEvt = new CustomEvent("BreadcrumbEvent", {detail: pathname});
       document.dispatchEvent(BreabEvt);
     }
@@ -137,6 +137,7 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
       >
         <Box display="flex" alignItems="center">
           {icon && <Icon className="icon">{icon}</Icon>}
+          {/* <SettingsOutlinedIcon /> */}
           {iconText && <BulletIcon />}
           <ItemText className="sidenavHoverShow">{name}</ItemText>
         </Box>

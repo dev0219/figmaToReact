@@ -1,0 +1,104 @@
+{"personalities":[
+    {
+      "id": 1,
+      "name": "Vigo",
+      "website": "vigo.com",
+      "sources": "03",
+      "file":["email.txt"],
+      "link":["https://linkedin.com/post/1"],
+      "verification":["https://importantscientificpaper.com"],
+      "learnt":"Their writing style is typically bold, playful, and infused with humor. It often employs catchy and memorable phrases that are easy to remember and repeat. The tone is frequently irreverent and cheeky, aiming to engage a young, energetic audience.",
+      "schedules":[
+        {
+            "id":1,
+            "title": "Best beaches in Califonia",
+            "description":"43s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+            "createdAt":"2023-12-15T23:21:23"
+        },
+        {
+            "id":2,
+            "title": "Best beaches in Califonia",
+            "description":"42s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+            "createdAt":"2023-12-15T23:21:23"
+        },
+        {
+            "id":3,
+            "title": "Best beaches in Califonia",
+            "description":"41s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+            "createdAt":"2023-12-15T23:21:23"
+        },
+        {
+            "id":4,
+            "title": "Best beaches in Califonia",
+            "description":"40s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+            "createdAt":"2023-12-15T23:21:23"
+        },
+        {
+            "id":5,
+            "title": "Best beaches in Califonia",
+            "description":"39s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+            "createdAt":"2023-12-15T23:21:23"
+        }
+      ],
+      "createdAt":"2023-12-15T23:21:23",
+      "status": 1
+    },
+    {
+        "id": 2,
+        "name": "ElCortelngles",
+        "website": "elcorteingles.com",
+        "sources": "03",
+        "file":["email.txt"],
+        "link":["https://linkedin.com/post/1"],
+        "verification":["https://importantscientificpaper.com"],
+        "learnt":"Their writing style is typically bold, playful, and infused with humor. It often employs catchy and memorable phrases that are easy to remember and repeat. The tone is frequently irreverent and cheeky, aiming to engage a young, energetic audience.",
+        "schedules":[],
+        "createdAt":"2023-12-15T23:21:23",
+        "status": 2
+      },
+      {
+        "id": 3,
+        "name": "Doritos",
+        "website": "doriotos.com",
+        "sources": "03",
+        "file":["email.txt"],
+        "link":["https://linkedin.com/post/1"],
+        "verification":["https://importantscientificpaper.com"],
+        "learnt":"Their writing style is typically bold, playful, and infused with humor. It often employs catchy and memorable phrases that are easy to remember and repeat. The tone is frequently irreverent and cheeky, aiming to engage a young, energetic audience.",
+        "schedules":[
+            {
+                "id":1,
+                "title": "Best beaches in Califonia",
+                "description":"43s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+                "createdAt":"2023-12-15T23:21:23"
+            },
+            {
+                "id":2,
+                "title": "Best beaches in Califonia",
+                "description":"42s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+                "createdAt":"2023-12-15T23:21:23"
+            },
+            {
+                "id":3,
+                "title": "Best beaches in Califonia",
+                "description":"41s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+                "createdAt":"2023-12-15T23:21:23"
+            },
+            {
+                "id":4,
+                "title": "Best beaches in Califonia",
+                "description":"40s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+                "createdAt":"2023-12-15T23:21:23"
+            },
+            {
+                "id":5,
+                "title": "Best beaches in Califonia",
+                "description":"39s video displaying the best beaches in California. Shows activities and ends with a CTA for the company.",
+                "createdAt":"2023-12-15T23:21:23"
+            }
+          ],
+        "createdAt":"2023-12-15T23:21:23",
+        "status": 3
+      }
+],
+"medias":["Instagram Reels", "Tiktok", "Youtube Shorts", "Instagram Stories"]}

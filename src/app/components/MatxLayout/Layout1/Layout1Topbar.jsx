@@ -52,6 +52,7 @@ const TopbarContainer = styled(Box)(({ theme }) => ({
   "& .breadcrumb":{
     display: 'flex',
     alignItems: 'center',
+    fontFamily: 'Inter',
     "& h2":{
       fontSize:'16px',
       fontWeight: '500',
@@ -127,14 +128,10 @@ const Layout1Topbar = () => {
   };
 
   const UpdateBreadCrumb = (path) => {
-
-    console.log("---event items")
-    console.log(path.detail)
-    console.log(navigations)
     for (var i= 0;i<navigations.length;i++) {
       let item = navigations[i];
-      let selected = item.children.filter((menu) => menu.path == path.detail)
-      if (selected.length) {
+      let selected = item.children?.filter((menu) => menu.path.includes(path.detail))
+      if (selected?.length) {
         setChildName(selected[0]['name'])
         setHeadName(item.name)
         break;
@@ -155,9 +152,9 @@ const Layout1Topbar = () => {
     <TopbarRoot>
       <TopbarContainer>
         <Box display="flex">
-          {/* <StyledIconButton onClick={handleSidebarToggle}>
+          <StyledIconButton onClick={handleSidebarToggle}>
             <Icon>menu</Icon>
-          </StyledIconButton> */}
+          </StyledIconButton>
 
 
           <Box className="breadcrumb">

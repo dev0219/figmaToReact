@@ -1,9 +1,9 @@
 import { Box, styled } from '@mui/material';
-import { MatxLogo } from 'app/components';
 import useSettings from 'app/hooks/useSettings';
 import { Span } from './Typography';
 
 const BrandRoot = styled(Box)(() => ({
+  fontFamily: 'Inter',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -25,15 +25,10 @@ const Brand = ({ children }) => {
   return (
     <BrandRoot>
       <Box display="flex" alignItems="center">
-        {/* <MatxLogo /> */}
         <StyledSpan mode={mode} className="sidenavHoverShow brand-div">
           Genie Scribe
         </StyledSpan>
       </Box>
-
-      {/* <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
-        {children || null}
-      </Box> */}
     </BrandRoot>
   );
 };

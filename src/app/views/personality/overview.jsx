@@ -1,21 +1,22 @@
 import { Box, styled, Button,InputLabel, FormControl } from "@mui/material";
-import { Breadcrumb, SimpleCard, SimpleCardTable } from "app/components";
+import { SimpleCardTable } from "app/components";
 import CustomizePaginationTable from "../material-kit/tables/CustomizePaginationTable";
 import InputAdornment from '@mui/material/InputAdornment';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import { useState } from 'react';
+import shortId from 'shortid';
+import { useState, useEffect } from 'react';
 import Fab from '@mui/material/Fab'
+import StaticData from "../../../static/static.json";
 
 const Container = styled("div")(({ theme }) => ({
+  fontFamily: 'Inter',
     margin: "5% 5%",
     [theme.breakpoints.down("sm")]: { margin: "16px" },
     "& .breadcrumb": {
@@ -32,72 +33,6 @@ const ElementListPanel = styled("div")({
   display: 'block'
 })
 
-const personalityArr = [
-    {
-      name: "john doe",
-      date: "18 january, 2019",
-      amount: 1000,
-      status: "close",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "kessy bryan",
-      date: "10 january, 2019",
-      amount: 9000,
-      status: "open",
-      company: "My Fintech LTD.",
-    },
-    {
-      name: "kessy bryan",
-      date: "10 january, 2019",
-      amount: 9000,
-      status: "open",
-      company: "My Fintech LTD.",
-    },
-    {
-      name: "james cassegne",
-      date: "8 january, 2019",
-      amount: 5000,
-      status: "close",
-      company: "Collboy Tech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-    {
-      name: "lucy brown",
-      date: "1 january, 2019",
-      amount: 89000,
-      status: "open",
-      company: "ABC Fintech LTD.",
-    },
-  ];
-
   const headerRows = [
     {title:"Name", align:"left"},
     {title:"Website", align:"center"},
@@ -107,23 +42,21 @@ const personalityArr = [
     {title:"Edit", align:"center"}
   ]
 
-  const filesNames = ["tele.txt", "naese.pdf", "ovlerie.docx", "naese.pdf", "ovlerie.docx"]
-  const linkArr = ["https://linkedin.com/post/1231", "https://linkedin.com/post/1231", "https://linkedin.com/post/1231"]
-  const sourceArr = ["https://linkedin.com/post/1231", "https://linkedin.com/post/1231", "https://linkedin.com/post/1231"]
-
-
   const PerasonalOverview = () => {
     const [open, setOpen] = useState(false);
     const [files, setFiles] = useState([]);
     const [links, setLinks] = useState([]);
+    const [name, setName] = useState('');
+    const [website, setWebsite] = useState('');
     const [sources, setSources] = useState([]);
+    const [personalityData, setPersonalityData] = useState(StaticData.personalities)
     const [isNewLink, setisNewLink] = useState(false)
     const [isNewSource, setisNewSource] = useState(false)
 
     const [isNewLinkVal, setisNewLinkVal] = useState('')
     const [isNewSourceVal, setisNewSourceVal] = useState('')
 
-    const CreatePersonality = () => {
+    const OpenCreateModal = () => {
       setOpen(true)
     }
 
@@ -181,16 +114,56 @@ const personalityArr = [
     }
 
     const handleClose = () => setOpen(false);
+
+    const getPersonalityData = () => {
+      try {
+        console.log("--- personality data ---")
+        console.log(StaticData)
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const SubmitPersonality = () => {
+      let currentDate = new Date();
+
+      let newObj = {
+        id: shortId.generate(),
+        name: name,
+        website: website,
+        file: files,
+        link: links,
+        verification: sources,
+        learnt:"",
+        sources: "03",
+        shedules: [],
+        createdAt:new Date().toISOString(),
+        status:2
+      }
+
+      let currentVal = personalityData;
+      currentVal.push(newObj)
+      setPersonalityData([...currentVal])
+
+      setOpen(false)
+
+    }
+
+    useEffect(() => {
+      getPersonalityData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
       <Container>
         <Box className="breadcrumb">
             Personalities
         </Box>
-        <SimpleCardTable title="List of your personalities" add="true" HandleCreate={CreatePersonality}>
-            <CustomizePaginationTable data={personalityArr} header={headerRows}/>
+        <SimpleCardTable title="List of your personalities" add="true" HandleCreate={OpenCreateModal}>
+            <CustomizePaginationTable data={personalityData} header={headerRows}/>
         </SimpleCardTable>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title"
           sx={{
+            fontFamily: 'Inter',
             "& .MuiDialog-container": {
               "& .MuiPaper-root": {
                 width: "80%",
@@ -202,12 +175,14 @@ const personalityArr = [
           >
           <DialogTitle id="form-dialog-title">Create a new personality</DialogTitle>
 
-          <DialogContent>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>             
+          <DialogContent sx={{fontFamily: 'Inter',}}>
+            <Grid container spacing={5}>
+              <Grid item lg={6} md={6} sm={12} xs={12}>             
                   <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Name*</InputLabel>
                   <TextField
                     fullWidth
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     id="name"
                     type="text"
                     autoFocus
@@ -215,7 +190,6 @@ const personalityArr = [
                     InputProps={{
                       style: {
                         borderRadius: "12px",
-                        width: '507px',
                         height: '49px'
                       }
                     }}
@@ -224,12 +198,13 @@ const personalityArr = [
                   <TextField
                     fullWidth
                     id="website"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
                     type="text"
                     margin="dense"
                     InputProps={{
                       style: {
                         borderRadius: "12px",
-                        width: '507px',
                         height: '49px'
                       }
                     }}
@@ -248,7 +223,7 @@ const personalityArr = [
                     })}                  
                   </ElementListPanel>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item lg={6} md={6} sm={12} xs={12}>
                   <InputLabel sx={{color: 'black' , fontSize: '16px', marginTop: "10px"}}>Links To Learn From</InputLabel>
                   <ElementListPanel>
                     <Button variant="contained" color="primary" sx={{ borderRadius: '10px', width:'95px', height: '33px', fontSize:'14px', padding: '0px', marginTop: '5px'}} onClick={() => HandleNewaction('link')}>Add New+</Button>
@@ -328,7 +303,7 @@ const personalityArr = [
           </DialogContent>
 
           <DialogActions sx={{display: 'flex', justifyContent: 'flex-start',paddingLeft: '20px'}}>
-            <Button onClick={handleClose} color="primary" variant="contained" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px'}}>
+            <Button onClick={() => SubmitPersonality()} color="primary" variant="contained" sx={{ width: '200px', fontSize: '18px', borderRadius: '10px'}}>
               Create
             </Button>
             <Button variant="outlined" onClick={handleClose} sx={{ width: '200px', fontSize: '18px', borderRadius: '10px', color: 'black'}}>
