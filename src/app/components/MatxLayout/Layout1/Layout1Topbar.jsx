@@ -1,6 +1,7 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import { useLocation } from 'react-router-dom';
 import {
   Avatar,
   Hidden,
@@ -16,8 +17,10 @@ import {
 import { MatxMenu, MatxSearchBox } from 'app/components';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
 import { NotificationProvider } from 'app/contexts/NotificationContext';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
+import { navigations } from 'app/navigations';
 import { Breadcrumb } from 'app/components';
 import { topBarHeight } from 'app/utils/constant';
 
@@ -46,6 +49,20 @@ const TopbarContainer = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   background: theme.palette.primary.main,
+  "& .breadcrumb":{
+    display: 'flex',
+    alignItems: 'center',
+    "& h2":{
+      fontSize:'16px',
+      fontWeight: '500',
+      color : '#71717A'
+    },
+    "& h3":{
+      fontSize:'16px',
+      fontWeight: '500',
+      color: '#4658AC'
+    }
+  },
   [theme.breakpoints.down('sm')]: {
     paddingLeft: 16,
     paddingRight: 16
@@ -89,6 +106,9 @@ const Layout1Topbar = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
   const { logout, user } = useAuth();
+  const { pathname } = useLocation();
+  const [headName, setHeadName] = useState('')
+  const [childName, setChildName] = useState('')
   const isMdScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const updateSidebarMode = (sidebarSettings) => {
@@ -106,12 +126,25 @@ const Layout1Topbar = () => {
     updateSidebarMode({ mode });
   };
 
-  const UpdateBreadCrumb = (items) => {
+  const UpdateBreadCrumb = (path) => {
+
     console.log("---event items")
-    console.log(items)
+    console.log(path.detail)
+    console.log(navigations)
+    for (var i= 0;i<navigations.length;i++) {
+      let item = navigations[i];
+      let selected = item.children.filter((menu) => menu.path == path.detail)
+      if (selected.length) {
+        setChildName(selected[0]['name'])
+        setHeadName(item.name)
+        break;
+      }
+    }
   }
   
   useEffect(() => {
+    let details = {detail: pathname}
+    UpdateBreadCrumb(details)
     document.addEventListener("BreadcrumbEvent", UpdateBreadCrumb);
       return () => {
         document.removeEventListener("BreadcrumbEvent", UpdateBreadCrumb);
@@ -128,7 +161,7 @@ const Layout1Topbar = () => {
 
 
           <Box className="breadcrumb">
-            <Breadcrumb routeSegments={[{ name: "Material", path: "/material" }, { name: "Table" }]} />
+             <h2>{headName}</h2><ChevronRightIcon/><h3>{childName}</h3>
           </Box>
           {/* <IconBox>
             <StyledIconButton>

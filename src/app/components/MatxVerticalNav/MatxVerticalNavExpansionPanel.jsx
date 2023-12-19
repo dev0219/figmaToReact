@@ -88,8 +88,13 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
   };
 
   const childrenMenuClick = () => {
-    const BreabEvt = new CustomEvent("BreadcrumbEvent", {detail: {pathname:pathname,item:item}});
-    document.dispatchEvent(BreabEvt);
+    let selectedMenu = item.children.filter((menuItem) => menuItem.path == pathname)    
+    if (selectedMenu.length) {
+      console.log("-----dflgneg", item)
+      const BreabEvt = new CustomEvent("BreadcrumbEvent", {detail: pathname});
+      document.dispatchEvent(BreabEvt);
+    }
+    
   }
 
   const calcaulateHeight = useCallback((node) => {
@@ -106,7 +111,6 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
 
   useEffect(() => {
     if (!elementRef) return;
-
     childrenMenuClick()
 
     calcaulateHeight(elementRef.current);
@@ -118,6 +122,8 @@ const MatxVerticalNavExpansionPanel = ({ item, children, mode }) => {
       }
     }
   }, [pathname, calcaulateHeight]);
+
+  
 
   return (
     <NavExpandRoot>
