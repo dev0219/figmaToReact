@@ -17,14 +17,15 @@ const Container = styled("div")(({ theme }) => ({
     },
 }));
 
-const CardRoot = styled(Card)({
+const CardRoot = styled(Card)(({ theme }) => ({
   fontFamily: 'Inter',
   height: '245px',
   width: '197px',
   marginTop: "20px",
   borderRadius:"8px",
-  padding: "10px"
-});
+  padding: "5px",
+  [theme.breakpoints.down("sm")]: { width: "185px" },
+}));
 
 const Element1 = styled('div')({
   fontFamily: 'Inter',
@@ -60,7 +61,7 @@ const Element2 = styled('div')({
 });
 
 
-const AddCardRoot = styled(Card)({
+const AddCardRoot = styled(Card)(({ theme }) => ({
   fontFamily: 'Inter',
   height: '245px',
   width: '197px',
@@ -73,6 +74,7 @@ const AddCardRoot = styled(Card)({
   alignItems:'center',
   textAlign: "center",
   color: "black",
+  [theme.breakpoints.down("sm")]: { width: "185px" },
   '& svg':{
     width: '39px',
     height: '39px'
@@ -83,7 +85,7 @@ const AddCardRoot = styled(Card)({
     lineHeight: '16.94px',
     margin: '0px'
   }
-});
+}));
 
   const SocialMedia = () => {
 
@@ -101,7 +103,7 @@ const AddCardRoot = styled(Card)({
             Performance Overview
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1}>
+          <Grid container spacing={3}>
             <Grid item lg={12/5} md={12/3} sm={12/3} xs={12/2}>
               <AddCardRoot>
                 <Box onClick={() => Add()}>
